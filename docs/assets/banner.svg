@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="400" viewBox="0 0 1440 400" role="img" aria-labelledby="title desc">
+  <title id="title">Creality K1 Print Skill</title>
+  <desc id="desc">Original technical illustration of an enclosed 3D printer, deposited layers and removable supports. Prepare, preview, approve, print.</desc>
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#102931"/><stop offset="1" stop-color="#07161d"/></linearGradient><pattern id="grid" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0H0V38" fill="none" stroke="#27404a" stroke-width="1"/></pattern></defs>
+  <rect width="1440" height="400" fill="url(#bg)"/>
+  <rect x="880" width="560" height="400" fill="url(#grid)" opacity=".55"/>
+  <text x="76" y="86" fill="#5cd4d0" font-family="Arial,Helvetica,sans-serif" font-size="17" letter-spacing="4">A LOCAL WORKFLOW FOR YOUR PRINTER</text>
+  <text x="72" y="159" fill="#f3f7f4" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="700">CREALITY K1</text>
+  <text x="76" y="215" fill="#f3f7f4" font-family="Arial,Helvetica,sans-serif" font-size="36" font-weight="400">PRINT SKILL</text>
+  <path d="M78 254H666" stroke="#35545e"/>
+  <g font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#c1d0d1"><text x="77" y="299">Prepare</text><text x="215" y="299">Preview</text><text x="357" y="299" fill="#ffb262">Approve</text><text x="515" y="299">Print</text></g>
+  <g stroke="#668791" fill="none" stroke-width="2"><path d="M177 292h18m-5-5 5 5-5 5M316 292h18m-5-5 5 5-5 5M464 292h18m-5-5 5 5-5 5"/></g>
+  <text x="77" y="354" fill="#829ba4" font-family="Arial,Helvetica,sans-serif" font-size="16">PLA · OrcaSlicer · Moonraker · Your approval, every job</text>
+  <g transform="translate(960 38)" stroke-linejoin="round">
+    <path d="M30 40 212 9 367 48 180 83Z" fill="#213c46" stroke="#88a5ad" stroke-width="3"/>
+    <path d="M30 40v247l150 55V83Z" fill="#172e37" stroke="#88a5ad" stroke-width="3"/>
+    <path d="M180 83 367 48v244l-187 50Z" fill="#0c202a" stroke="#88a5ad" stroke-width="3"/>
+    <path d="m47 73 117 39v189L47 263Zm151 29 150-29v201l-150 41Z" fill="#15343d" fill-opacity=".8" stroke="#4b6a75" stroke-width="2"/>
+    <path d="m65 250 141-31 120 41-142 40Z" fill="#314b55" stroke="#9bb5bb" stroke-width="2"/>
+    <path d="m93 263 100-25 94 31M124 276l100-26M155 288l102-27" fill="none" stroke="#58747f"/>
+    <g stroke="#f7a252" stroke-width="4" fill="none"><path d="m127 256 6-61 13-26m100 102-8-63-16-24"/><path d="m131 221 18-16m89 35-18-18"/></g>
+    <g stroke="#62d2cf" stroke-width="3"><path d="m150 213 44-11 25 8v50l-44 11-25-8Z" fill="#265f68"/><path d="m151 220 24 8 43-11m-67 10 24 8 43-11m-67 10 24 8 43-11m-67 10 24 8 43-11m-67 10 24 8 43-11" fill="none"/></g>
+    <path d="m74 114 215 47" stroke="#7d9da7" stroke-width="6"/>
+    <path d="m177 128 30 7v23l-15 11-15-18Z" fill="#e9ede6" stroke="#89a5ad" stroke-width="2"/>
+    <path d="m192 169v14" stroke="#f7a252" stroke-width="4"/>
+    <rect x="60" y="286" width="52" height="20" rx="3" fill="#58c5c1"/>
+  </g>
+</svg>
