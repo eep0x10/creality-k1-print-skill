@@ -1,13 +1,21 @@
 ---
 name: creality-k1-print
-description: Prepare PLA models for an original Creality K1, generate a real sliced-toolpath preview with OrcaSlicer, and send the exact approved G-code through Moonraker. Use for K1 print requests, STL/3MF preparation and printer integration setup.
+description: Prepare PLA models for an original Creality K1, preview OrcaSlicer toolpaths, send approved G-code through Moonraker, and show an on-demand local camera snapshot. Use for K1 printing, STL/3MF preparation, connection setup and camera/status requests.
 ---
 
 # Creality K1: prepare, preview, approve, print
 
 Use the user's language. This skill supports an original K1 with a 0.4 mm nozzle, PLA, a local computer with OrcaSlicer, and a working Moonraker service. Root access alone does not establish that Moonraker works. Do not modify firmware or an existing print as part of setup.
 
-## Start with the decision mode
+## Read status or show a camera photo
+
+For a status/photo request about an existing print, skip the new-project preference questions. Read [camera setup and capture](references/camera.md). Use `snapshot --output <local-private-folder>/status.jpg` to retrieve one real frame and the observed printer state. If cameras are ambiguous, select the intended configured camera by name. Do not guess a universal K1 camera endpoint.
+
+Show the returned local image inline using an absolute filesystem path. Label the retrieval time and the separately observed printer state; they are not an atomic observation, and a server may return a cached frame. Distinguish a camera photo from a sliced preview. Describe only what is visible; a photo alone does not prove adhesion, successful completion or absence of defects. Report an unavailable camera honestly and retain status-only consultation as a fallback.
+
+Capture on demand; no recurring monitoring or webcam reconfiguration is included. Do not publish photos, camera URLs or local metadata. Displaying a photo in chat makes it available to the chat host under its own data policy. Snapshot requests never authorize pause, cancel, resume or a new print.
+
+## Start each new print with the decision mode
 
 Before preparing each new project, ask **first and by itself** whether the user wants the GPT to evaluate the model and decide the settings or prefers to make those choices. Example: “Quer que eu avalie o projeto e decida as configurações, ou prefere escolher?”
 

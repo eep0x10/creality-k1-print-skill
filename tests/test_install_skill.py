@@ -29,12 +29,15 @@ class InstallSkillTests(unittest.TestCase):
             (source / '.env').write_text('private fixture', encoding='utf-8')
             (source / '__pycache__').mkdir()
             (source / '__pycache__/helper.pyc').write_bytes(b'cache')
+            (source / 'snapshots').mkdir()
+            (source / 'snapshots/private-camera.png').write_bytes(b'private image fixture')
             destination = root / 'installed'
             module.install_skill(source, destination)
             self.assertTrue((destination / 'SKILL.md').exists())
             self.assertTrue((destination / 'scripts/helper.py').exists())
             self.assertFalse((destination / '.env').exists())
             self.assertFalse((destination / '__pycache__').exists())
+            self.assertFalse((destination / 'snapshots').exists())
 
     def test_existing_skill_is_preserved(self):
         module = self.installer()

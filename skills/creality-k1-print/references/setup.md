@@ -59,3 +59,5 @@ If Moonraker requires an API key, configure `--api-key-env MOONRAKER_API_KEY` an
 If you do not know the address, use `k1print discover --subnet YOUR_PRIVATE_SUBNET/24`. Only scan a network you own or are authorized to inspect. The helper limits scanning to a small RFC1918 IPv4 subnet; it does not traverse VPNs, routers or public addresses automatically. With multiple candidate printers, select the intended identity explicitly.
 
 Next: [workflow](workflow.md). If setup fails, report the actual limitation; do not claim a configured skill creates callable tools in an already running client.
+
+For an existing camera/snapshot service, see [camera setup and capture](camera.md). Camera support is optional and does not change print approval. Use Moonraker webcam discovery or local `camera_url`; `camera_base_url` handles relative URLs behind a proxy. Do not expose a camera publicly or modify printer services during a print.

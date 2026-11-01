@@ -3,10 +3,31 @@ import json
 import os
 from pathlib import Path
 import re
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlsplit
 
 DEFAULT_CONFIG = Path.home() / '.config/k1-print/config.json'
-FIELDS = {'printer_url', 'expected_hostname', 'orca_path', 'orca_resources', 'api_key_env'}
+FIELDS = {'printer_url', 'expected_hostname', 'orca_path', 'orca_resources', 'api_key_env', 'camera_url', 'camera_base_url'}
+SECRET_QUERY_KEYS = {'token', 'accesstoken', 'apikey', 'key', 'auth', 'authorization', 'password', 'pass', 'passwd', 'secret', 'session', 'sessionid', 'sid', 'signature', 'xapikey', 'xamzcredential', 'xamzsignature', 'xamzsecuritytoken'}
+
+
+def validate_camera_url(value, printer_url, origin_only=False):
+    """Accept same-host HTTP URLs without URL credentials or secret queries."""
+    if not isinstance(value, str) or not value or any(character.isspace() or ord(character) < 32 for character in value) or '\\' in value or '#' in value:
+        raise ValueError('Invalid camera URL configuration')
+    try:
+        parsed, printer = urlsplit(value), urlsplit(printer_url)
+        parsed.port
+        if parsed.scheme not in {'http', 'https'} or not parsed.hostname or parsed.hostname != printer.hostname or parsed.username is not None or parsed.password is not None:
+            raise ValueError('Camera URL must use the configured printer hostname')
+        if origin_only and (parsed.path not in {'', '/'} or parsed.query):
+            raise ValueError('Camera base URL must be an HTTP origin')
+        for key, _ in parse_qsl(parsed.query, keep_blank_values=True):
+            normalized = re.sub(r'[^a-z0-9]', '', key.lower())
+            if normalized in SECRET_QUERY_KEYS:
+                raise ValueError('Camera URL secret query parameters are unsupported')
+    except (ValueError, UnicodeError):
+        raise ValueError('Invalid or unsupported camera URL configuration') from None
+    return value.rstrip('/') if origin_only else value
 
 
 def validate_config(data):
@@ -33,6 +54,9 @@ def validate_config(data):
     env = result.get('api_key_env')
     if env is not None and (not isinstance(env, str) or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', env)):
         raise ValueError('api_key_env must name an environment variable')
+    for key in ('camera_url', 'camera_base_url'):
+        if key in result:
+            result[key] = validate_camera_url(result[key], result['printer_url'], origin_only=key == 'camera_base_url')
     return result
 
 

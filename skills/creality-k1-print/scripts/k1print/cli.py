@@ -22,11 +22,16 @@ def build_parser():
     init.add_argument('--orca-path', required=True, help='User-installed OrcaSlicer executable')
     init.add_argument('--orca-resources', help='Optional Orca resources directory')
     init.add_argument('--api-key-env', help='Name of environment variable holding an API key; never the key itself')
+    init.add_argument('--camera-url', help='Optional absolute snapshot URL on the printer hostname, without credentials')
+    init.add_argument('--camera-base-url', help='Optional HTTP origin for relative camera URLs; default is printer HTTP port 80')
     scan = commands.add_parser('discover', help='GET-only scan of an explicit private IPv4 subnet, at most /24')
     scan.add_argument('--subnet', required=True)
     scan.add_argument('--port', type=int, default=7125)
     scan.add_argument('--timeout', type=float, default=0.5)
     commands.add_parser('status', help='Read configured printer identity and state using GET only')
+    snapshot = commands.add_parser('snapshot', help='Save one read-only camera JPEG/PNG; does not change or approve a print')
+    snapshot.add_argument('--output', type=Path, required=True, help='New local image path; existing files are never replaced')
+    snapshot.add_argument('--camera-name', help='Configured enabled camera name when more than one snapshot is available')
     profiles = commands.add_parser('profiles', help='Derive local K1/PLA profiles from the installed Orca resources')
     profiles.add_argument('--output-dir', type=Path, required=True)
     prepare = commands.add_parser('prepare', help='Prepare geometry, slice offline and render the real G-code preview')
@@ -50,7 +55,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.command == 'init':
-            data = {key: getattr(args, key) for key in ('printer_url', 'expected_hostname', 'orca_path', 'orca_resources', 'api_key_env') if getattr(args, key) is not None}
+            data = {key: getattr(args, key) for key in ('printer_url', 'expected_hostname', 'orca_path', 'orca_resources', 'api_key_env', 'camera_url', 'camera_base_url') if getattr(args, key) is not None}
             result = {'config': str(save_config(data, args.config)), 'printer_contacted': False}
         elif args.command == 'discover':
             from .discovery import discover
@@ -60,6 +65,9 @@ def main(argv=None):
             if args.command == 'status':
                 from .transport import printer_status
                 result = printer_status(config)
+            elif args.command == 'snapshot':
+                from .camera import capture_snapshot
+                result = capture_snapshot(config, args.output, camera_name=args.camera_name)
             elif args.command == 'profiles':
                 from .profiles import prepare_profiles
                 result = prepare_profiles(config, args.output_dir, args.strength, args.finish)

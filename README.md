@@ -65,9 +65,20 @@ A skill também pode ser instalada pelo instalador de skills do seu agente apont
 | Prioridades | Robustez/economia e rapidez/detalhe, com modo equilibrado |
 | Prévia | Percursos depositados reais, suportes destacados, estimativas e hashes |
 | Conexão | Descoberta limitada à rede privada escolhida, consulta de estado e identidade |
+| Câmera | Foto JPEG/PNG sob demanda, salva localmente e acompanhada do estado da impressora |
 | Envio | Arquivo aprovado, verificação de checksum, upload sem início automático e uma solicitação de início |
 
 O núcleo funciona **sem Kiln e sem conta de nuvem**. Kiln é uma integração opcional; [entenda a escolha do transporte nativo](docs/INTEGRATIONS.md).
+
+## Ver a impressão pela câmera
+
+Com uma câmera e um serviço de snapshot já configurados, peça: **“Use $creality-k1-print para me mostrar uma foto da câmera e o estado da impressão.”** A skill obtém uma foto real pela rede local e a mostra no chat com o horário da consulta. Esse pedido não refaz as perguntas de preparação nem altera a impressão.
+
+```sh
+k1print snapshot --output snapshots/status.jpg
+```
+
+A câmera pode ser descoberta pelo Moonraker ou definida na configuração local. A disponibilidade depende da sua instalação; root sozinho não fornece câmera nem endpoint universal. Não há monitoramento contínuo nesta função. Fotos permanecem fora do repositório; ao exibi-las no chat, vale a política de dados desse host. Veja o [guia da câmera](skills/creality-k1-print/references/camera.md).
 
 ## Exemplo sintético
 
@@ -87,6 +98,7 @@ Os perfis são pontos de partida. A calibração física do seu rolo, a limpeza 
 | :--- | :--- |
 | [Instalação](skills/creality-k1-print/references/setup.md) | Ambiente isolado, conexão, recursos Orca e comandos |
 | [Fluxo de impressão](skills/creality-k1-print/references/workflow.md) | Preferências, preparação, prévia e aceite vinculado ao arquivo |
+| [Câmera e status](skills/creality-k1-print/references/camera.md) | Foto sob demanda, descoberta, conexão manual e privacidade |
 | [Arquitetura](docs/ARCHITECTURE.md) | Componentes, manifesto e transmissão |
 | [Integrações](docs/INTEGRATIONS.md) | Moonraker, OrcaSlicer, fontes de modelos e Kiln opcional |
 | [Privacidade](docs/PRIVACY.md) | Arquivos locais, segredos, rede e publicação |

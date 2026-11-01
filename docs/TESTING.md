@@ -15,6 +15,8 @@ On Linux/macOS use `python3 -m venv .venv` and replace `.venv/Scripts/python.exe
 
 Coverage includes approval absence, modified artifacts, wrong/busy printer, start/upload uncertainty, receipt reuse, exact arc bounds, 3MF transforms/units and hostile archive/XML forms, profile inheritance, real-toolpath reports, CLI quoting and installer non-overwrite behavior. CI runs the tests on Windows and Linux. The workflow status, rather than a hardcoded test-count badge, is the current CI evidence.
 
+Camera checks use synthetic JPEG/PNG bytes and mocked HTTP responses, never photos from a real camera. They cover discovery/selection, relative URL resolution, explicit configuration, GET-only behavior during an existing print, origin-specific credentials, invalid images, response limits and exclusive local output. A software pass does not verify that a particular K1 has a reachable camera service.
+
 ## Real slicer check
 
 The public preparation pipeline was exercised offline with OrcaSlicer 2.4.2 on Windows and an original synthetic overhang. It produced G-code, estimates and a preview; the full generated job passed local validation without any printer HTTP requests. The README image comes from this synthetic job.

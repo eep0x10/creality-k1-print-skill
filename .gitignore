@@ -9,6 +9,12 @@ dist/
 build/
 jobs/
 outputs/
+snapshots/
+captures/
+*.jpg
+*.jpeg
+*.webp
+*.snapshot.png
 config.local.json
 *.local.json
 .env

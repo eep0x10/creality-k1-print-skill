@@ -57,6 +57,16 @@ A chat without a local executor cannot access your printer merely by loading the
 
 ![Synthetic Orca toolpath example](docs/assets/toolpath-demo.png)
 
+## Camera snapshots
+
+With a working camera/snapshot service already configured, ask: **“Use $creality-k1-print to show me a camera photo and the print state.”** The skill retrieves a real local-network frame and shows it in chat with a retrieval timestamp and the separately observed printer state. Status requests skip new-print preference questions and never alter the print.
+
+```sh
+k1print snapshot --output snapshots/status.jpg
+```
+
+Use Moonraker webcam discovery or an explicit local snapshot URL. Root alone does not provide a camera or universal endpoint. Photos stay outside the repository; displaying them in chat is subject to that host's data policy. This feature does not install continuous monitoring. See the [camera guide](skills/creality-k1-print/references/camera.md).
+
 ## Limits and documentation
 
 The originating workflow confirmed a print start on an original K1; print completion and physical quality are separate evidence. The public package is tested with synthetic geometry and mocked requests. Profiles are starting points, not spool calibration. Display sampling is labeled; firmware macros are not simulated. Bed preparation, PLA loading and support removal remain physical steps. No public server, internet tunnel or permanent monitor is installed.

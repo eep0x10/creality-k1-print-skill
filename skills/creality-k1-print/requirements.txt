@@ -2,3 +2,4 @@ requests>=2.32,<3
 numpy>=1.24,<3
 trimesh>=4,<6
 matplotlib>=3.8,<4
+Pillow>=10,<14

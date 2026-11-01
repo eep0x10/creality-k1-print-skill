@@ -6,7 +6,7 @@ import subprocess
 import sys
 import venv
 
-IGNORED = {'.git', '.venv', '__pycache__', 'jobs', 'outputs', '.validation'}
+IGNORED = {'.git', '.venv', '__pycache__', 'jobs', 'outputs', 'snapshots', 'captures', '.validation'}
 SUFFIXES = {'.md', '.py', '.yaml', '.yml', '.txt', '.svg', '.png'}
 
 

@@ -7,7 +7,7 @@ import sys
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-FORBIDDEN_SUFFIXES = {'.stl', '.3mf', '.gcode', '.gco', '.exe', '.dll', '.pyd', '.db', '.sqlite', '.log', '.pyc', '.zip'}
+FORBIDDEN_SUFFIXES = {'.stl', '.3mf', '.gcode', '.gco', '.exe', '.dll', '.pyd', '.db', '.sqlite', '.log', '.pyc', '.zip', '.jpg', '.jpeg', '.webp'}
 PRIVATE = [
     re.compile(r'[A-Za-z]:[\\/]+Users[\\/]+[A-Za-z0-9_.-]+', re.I),
     re.compile(r'\bgh[pousr]_[A-Za-z0-9]{20,}\b'),
@@ -30,8 +30,10 @@ def audit(root=ROOT):
         if path.is_symlink() or not path.is_file():
             errors.append(f'{name}: only regular files may be published')
             continue
-        if path.suffix.lower() in FORBIDDEN_SUFFIXES or any(part in {'.venv', '__pycache__', 'jobs', 'outputs', '.validation'} for part in path.relative_to(root).parts):
+        if path.suffix.lower() in FORBIDDEN_SUFFIXES or any(part in {'.venv', '__pycache__', 'jobs', 'outputs', 'snapshots', 'captures', '.validation'} for part in path.relative_to(root).parts):
             errors.append(f'{name}: private/generated/binary artifact is not allowed')
+        if path.suffix.lower() == '.png' and name != 'docs/assets/toolpath-demo.png':
+            errors.append(f'{name}: unreviewed image; camera captures must stay local')
         if path.name.startswith('.env') or path.name.endswith('.local.json'):
             errors.append(f'{name}: local configuration is not distributable')
         if path.suffix.lower() not in {'.md', '.py', '.json', '.toml', '.txt', '.yaml', '.yml', '.svg', '.gitignore'} and path.name not in {'LICENSE', '.gitignore'}:

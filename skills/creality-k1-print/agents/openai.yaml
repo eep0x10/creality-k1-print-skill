@@ -1,6 +1,6 @@
 interface:
   display_name: "Creality K1 Print"
-  short_description: "Prepare PLA, preview toolpaths, approve, then print"
+  short_description: "Prepare PLA, approve prints and view camera snapshots"
   default_prompt: "Use $creality-k1-print to prepare my model for the K1, first asking who should choose the settings, then showing the sliced preview before print approval."
 policy:
   allow_implicit_invocation: true

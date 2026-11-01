@@ -26,3 +26,4 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python scripts/audit_publication.py
       - run: python -m k1print --help
+      - run: python -m k1print snapshot --help
