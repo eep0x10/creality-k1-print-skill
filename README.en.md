@@ -67,6 +67,12 @@ k1print snapshot --output snapshots/status.jpg
 
 Use Moonraker webcam discovery or an explicit local snapshot URL. Root alone does not provide a camera or universal endpoint. Photos stay outside the repository; displaying them in chat is subject to that host's data policy. This feature does not install continuous monitoring. See the [camera guide](skills/creality-k1-print/references/camera.md).
 
+## Continue on another PC or with another AI
+
+Start with [AGENTS.md](AGENTS.md), the [AI guide](docs/AI_GUIDE.md), [project state](docs/PROJECT_STATE.md) and [continuity guide](docs/CONTINUITY.md). They explain constraints, verified behavior, open work, clean setup/tests and a handoff prompt. `CLAUDE.md` points to the same canonical instructions.
+
+GitHub preserves public source and reusable knowledge. Real models, photos, custom profiles and receipts require a separate private owner archive; configure connection and credentials locally on the new machine. `prepare --profiles-dir` reuses a complete private profile set without generic overrides. Importing settings does not prove physical calibration. See [physical quality](skills/creality-k1-print/references/physical-quality.md) and [release verification](docs/RELEASING.md).
+
 ## Limits and documentation
 
 The originating workflow confirmed a print start on an original K1; print completion and physical quality are separate evidence. The public package is tested with synthetic geometry and mocked requests. Profiles are starting points, not spool calibration. Display sampling is labeled; firmware macros are not simulated. Bed preparation, PLA loading and support removal remain physical steps. No public server, internet tunnel or permanent monitor is installed.

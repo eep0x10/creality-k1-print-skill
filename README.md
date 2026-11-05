@@ -11,7 +11,7 @@
 [![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-21655B)](LICENSE)
 [![English](https://img.shields.io/badge/docs-English-637D71)](README.en.md)
 
-[Instalar](#comece-aqui) · [Como funciona](#do-modelo-à-k1) · [Documentação](#documentação) · [Downloads](https://github.com/eep0x10/creality-k1-print-skill/releases)
+[Instalar](#comece-aqui) · [Como funciona](#do-modelo-à-k1) · [Continuar em outro PC](docs/CONTINUITY.md) · [Documentação](#documentação) · [Downloads](https://github.com/eep0x10/creality-k1-print-skill/releases)
 
 </div>
 
@@ -61,7 +61,7 @@ A skill também pode ser instalada pelo instalador de skills do seu agente apont
 | Recurso | Comportamento |
 | :--- | :--- |
 | Geometria | STL e geometria de 3MF, transformações de montagem e escala uniforme |
-| Perfis | Derivados dos recursos oficiais do OrcaSlicer instalado, sem reutilizar G-code externo |
+| Perfis | Derivados dos recursos oficiais do Orca ou importados de um conjunto local completo, sem reutilizar G-code externo |
 | Prioridades | Robustez/economia e rapidez/detalhe, com modo equilibrado |
 | Prévia | Percursos depositados reais, suportes destacados, estimativas e hashes |
 | Conexão | Descoberta limitada à rede privada escolhida, consulta de estado e identidade |
@@ -79,6 +79,12 @@ k1print snapshot --output snapshots/status.jpg
 ```
 
 A câmera pode ser descoberta pelo Moonraker ou definida na configuração local. A disponibilidade depende da sua instalação; root sozinho não fornece câmera nem endpoint universal. Não há monitoramento contínuo nesta função. Fotos permanecem fora do repositório; ao exibi-las no chat, vale a política de dados desse host. Veja o [guia da câmera](skills/creality-k1-print/references/camera.md).
+
+## Continuar o desenvolvimento em outro PC
+
+O projeto inclui **[AGENTS.md](AGENTS.md)** com as regras para agentes, um [guia de IA](docs/AI_GUIDE.md), [estado e pendências](docs/PROJECT_STATE.md) e um [roteiro de continuidade](docs/CONTINUITY.md) com instalação, testes e mensagem pronta para a próxima IA.
+
+O clone público preserva código e conhecimento reutilizável. O proprietário transfere seus modelos, fotos, perfis e recibos separadamente, em um pacote privado. Segredos e conexão são configurados novamente no novo PC. Para fatiar com ajustes próprios, use `prepare --profiles-dir`; importar um perfil não o torna fisicamente calibrado.
 
 ## Exemplo sintético
 
@@ -104,5 +110,11 @@ Os perfis são pontos de partida. A calibração física do seu rolo, a limpeza 
 | [Privacidade](docs/PRIVACY.md) | Arquivos locais, segredos, rede e publicação |
 | [Testes](docs/TESTING.md) | Comandos reproduzíveis, evidências e limites da validação |
 | [Contribuir](CONTRIBUTING.md) | Desenvolvimento e revisão |
+| [Instruções para IAs](AGENTS.md) | Regras canônicas e documentos obrigatórios para retomar |
+| [Continuidade](docs/CONTINUITY.md) | Outro PC, instalação, dados privados e prompt para outra IA |
+| [Estado do projeto](docs/PROJECT_STATE.md) | Funcionalidades, evidências, limitações e próximos passos |
+| [Qualidade física](skills/creality-k1-print/references/physical-quality.md) | Calibração por rolo, interpretação de fotos e perfis próprios |
+| [Publicação](docs/RELEASING.md) | Revisão, CI, pacote e conferência dos downloads |
+| [Histórico de versões](CHANGELOG.md) | Mudanças públicas por versão |
 
 Projeto independente, sem afiliação ou endosso da Creality. Código próprio sob [MIT](LICENSE); ferramentas externas mantêm suas próprias [licenças e avisos](THIRD_PARTY_NOTICES.md).

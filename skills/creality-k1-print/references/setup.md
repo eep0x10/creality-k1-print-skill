@@ -19,6 +19,8 @@ python scripts/install_skill.py --with-runtime
 
 Default destination: `~/.agents/skills/creality-k1-print`. `--target PATH` selects another directory; existing targets are preserved and cause an error. `--with-runtime` creates `<skill>/.venv` and installs the declared Python dependencies from the normal package registry. It does not download OrcaSlicer or contact a printer.
 
+If copying succeeded but dependency installation failed, rerun the installer from the source repository with `--repair-runtime --target <skill-folder>`. This repairs only the recognized skill's Python runtime and preserves its instructions/scripts. It is not an upgrade command. For a version update, first back up the existing installation privately and install into a new/empty destination, reviewing any local customization before selecting the new skill.
+
 Use that environment's interpreter with `<skill>/scripts/k1.py`. On Windows it is `<skill>/.venv/Scripts/python.exe`; on Linux/macOS it is `<skill>/.venv/bin/python`. This avoids depending on whichever global Python the agent happens to use.
 
 Codex local discovery and other agent locations depend on the host. The current [official Codex skill documentation](https://learn.chatgpt.com/docs/build-skills) describes user and repository skill directories. The folder is an Agent Skills resource; a host without local execution still needs an actual printer bridge.

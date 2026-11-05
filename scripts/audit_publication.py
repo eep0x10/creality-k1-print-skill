@@ -11,6 +11,7 @@ FORBIDDEN_SUFFIXES = {'.stl', '.3mf', '.gcode', '.gco', '.exe', '.dll', '.pyd', 
 PRIVATE = [
     re.compile(r'[A-Za-z]:[\\/]+Users[\\/]+[A-Za-z0-9_.-]+', re.I),
     re.compile(r'\bgh[pousr]_[A-Za-z0-9]{20,}\b'),
+    re.compile(r'\bgithub_pat_[A-Za-z0-9_]{20,}\b'),
     re.compile(r'\b[A-Za-z0-9_.+-]+@(?:gmail|hotmail|outlook)\.com\b', re.I),
     re.compile(r'-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----'),
 ]
@@ -56,7 +57,7 @@ def audit(root=ROOT):
                 local = (path.parent / unquote(parsed.path)).resolve()
                 if not local.is_relative_to(root) or not local.exists():
                     errors.append(f'{name}: missing/outside local link {target}')
-    for required in ['LICENSE', 'README.md', 'README.en.md', 'pyproject.toml', 'skills/creality-k1-print/SKILL.md', 'skills/creality-k1-print/agents/openai.yaml', 'docs/assets/banner.svg', 'docs/assets/toolpath-demo.png']:
+    for required in ['LICENSE', 'README.md', 'README.en.md', 'AGENTS.md', 'CLAUDE.md', 'CHANGELOG.md', 'docs/AI_GUIDE.md', 'docs/PROJECT_STATE.md', 'docs/CONTINUITY.md', 'docs/RELEASING.md', 'pyproject.toml', 'skills/creality-k1-print/SKILL.md', 'skills/creality-k1-print/references/physical-quality.md', 'skills/creality-k1-print/agents/openai.yaml', 'docs/assets/banner.svg', 'docs/assets/toolpath-demo.png']:
         if not (root / required).is_file():
             errors.append(f'Required file missing: {required}')
     skill_license = root / 'skills/creality-k1-print/LICENSE'

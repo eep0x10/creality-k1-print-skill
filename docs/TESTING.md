@@ -17,11 +17,15 @@ Coverage includes approval absence, modified artifacts, wrong/busy printer, star
 
 Camera checks use synthetic JPEG/PNG bytes and mocked HTTP responses, never photos from a real camera. They cover discovery/selection, relative URL resolution, explicit configuration, GET-only behavior during an existing print, origin-specific credentials, invalid images, response limits and exclusive local output. A software pass does not verify that a particular K1 has a reachable camera service.
 
+Custom-profile tests verify that complete local settings are copied byte-for-byte and actually passed to the slicer instead of being replaced by generic values. Rejected inputs include wrong machine/nozzle/material, inheritance, invalid/non-finite/duplicate JSON values and host post-processing. Installer checks cover non-overwrite and recovery of a recognized local runtime. Release tests cover clean-commit provenance, dirty-tree rejection and per-file archive hashes.
+
 ## Real slicer check
 
 The public preparation pipeline was exercised offline with OrcaSlicer 2.4.2 on Windows and an original synthetic overhang. It produced G-code, estimates and a preview; the full generated job passed local validation without any printer HTTP requests. The README image comes from this synthetic job.
 
 The underlying workflow also previously confirmed a start on one original K1. That separate physical run does not prove completion or finish quality, and its private model/configuration are not distributed. Development and CI never use it as a fixture.
+
+For the v0.3.0 continuity review, a separate offline replay on Windows/OrcaSlicer 2.4.2 imported the owner's preserved private profile set. It retained the supplied 215 C / flow 0.98 / layer 0.12 mm and produced a validated real-toolpath job with the same displayed slicer estimate (1h53m05s /12.03g) as the historical finish candidate. No printer calls, upload or start occurred. This demonstrates profile reuse on that software setup, not physical calibration or byte-identical output across machines. The private source/profile/job data is not a public test fixture.
 
 ## Skill behavior checks
 

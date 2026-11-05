@@ -51,6 +51,19 @@ class CliTests(unittest.TestCase):
             self.assertNotIn('printer.example', error.getvalue())
             self.assertNotIn('private-test-key', error.getvalue())
 
+    def test_prepare_custom_profiles_forwarded_and_explicit_priorities_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp, contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            filename = Path(tmp) / 'config.json'
+            config.save_config({'printer_url': 'http://printer.example:7125', 'expected_hostname': 'synthetic-k1', 'orca_path': '/tools/orca'}, filename)
+            args = ['--config', str(filename), 'prepare', 'model.stl', '--job-dir', 'new-job', '--profiles-dir', 'saved-profiles']
+            with patch('k1print.slicing.prepare_job', return_value={'state': 'awaiting_preview_approval'}) as prepare:
+                self.assertEqual(cli.main(args), 0)
+                self.assertEqual(prepare.call_args.kwargs['profiles_dir'], Path('saved-profiles'))
+                for extra in (['--strength', 'balanced'], ['--finish', 'detailed']):
+                    prepare.reset_mock()
+                    self.assertEqual(cli.main(args + extra), 2)
+                    prepare.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main()

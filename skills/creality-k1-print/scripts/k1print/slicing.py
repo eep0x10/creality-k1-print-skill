@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 from .model import prepare_model
-from .profiles import prepare_profiles
+from .profiles import import_profiles, prepare_profiles
 from .preview import render_preview
 from .validation import validate_gcode
 
@@ -19,17 +19,21 @@ def _sha256(path):
     return digest.hexdigest()
 
 
-def prepare_job(source, jobdir, config, height_mm=None, strength='balanced', finish='balanced', orientation=False):
+def prepare_job(source, jobdir, config, height_mm=None, strength=None, finish=None, orientation=False, profiles_dir=None):
     """Prepare offline only. No printer client or network operation is used.
 
     The job directory must be empty. Failure preserves intermediate artifacts for
     diagnosis; retry in a fresh directory. Original presets and models are read-only.
     """
+    if profiles_dir is not None and (strength is not None or finish is not None):
+        raise ValueError('Custom profiles cannot be combined with strength or finish priorities')
     source = Path(source).expanduser().resolve(strict=True)
     job = Path(jobdir).expanduser()
     if job.is_symlink():
         raise ValueError('Job directory must not be a symlink')
     job = job.resolve()
+    if ';' in str(job) or any(ord(character) < 32 for character in str(job)):
+        raise ValueError('Job path contains unsupported Orca profile separators')
     if job.exists() and (not job.is_dir() or any(job.iterdir())):
         raise FileExistsError('Use a new or empty job directory to preserve existing work')
     executable = Path(config.get('orca_path', '')).expanduser().resolve(strict=True)
@@ -41,7 +45,7 @@ def prepare_job(source, jobdir, config, height_mm=None, strength='balanced', fin
     model_path = job / 'geometry' / 'model.stl'
     geometry = prepare_model(source, model_path, height_mm)
     (job / 'geometry.json').write_text(json.dumps(geometry, indent=2) + '\n', encoding='utf-8')
-    profiles = prepare_profiles(config, job / 'profiles', strength, finish)
+    profiles = import_profiles(profiles_dir, job / 'profiles') if profiles_dir is not None else prepare_profiles(config, job / 'profiles', strength or 'balanced', finish or 'balanced')
     output = job / 'output'
     output.mkdir()
     # .py supports explicit local executable wrappers and the offline test harness.

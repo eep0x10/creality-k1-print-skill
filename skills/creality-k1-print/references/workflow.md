@@ -16,6 +16,8 @@ Omit `--height-mm` to preserve source size. Scaling is uniform. Use a fresh job 
 
 `--orient` asks Orca to propose automatic orientation. Compare it with the original when there is a plausible benefit. Preserve the model's appearance and assembly; do not silently split it or pretend the orientation heuristic is globally optimal. Deriving profiles alone is available through `k1print profiles --output-dir PATH`.
 
+To reuse reviewed private settings, pass `--profiles-dir PATH` containing complete `machine.json`, `process.json` and `filament.json` files. Do not combine it with explicit `--strength` or `--finish`. The files are copied into the fresh job with hashes/provenance, without generic overrides or changes to the originals. Imports do not establish physical calibration. Inherited presets and external post-processing are refused; flatten and review profiles through the user's installed Orca first. Keep these generated/private profiles out of Git and verify the resulting G-code before approval.
+
 Review `job.json`, `preview.png` and `preview-report.json` in the resulting directory. The manifest binds the G-code, preview and report with SHA256. Artifacts are local and not intended for publication. A bounded sample may be used for the 3D image; full bounds and estimates must still be retained. Model and support paths use different colors.
 
 ## Approval and transmission

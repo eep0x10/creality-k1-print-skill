@@ -22,6 +22,10 @@ The agent's conversation supplies the human approval. An approval reference reco
 
 These checks reduce common mistakes; they do not simulate firmware, guarantee physical print quality or replace user supervision.
 
+## Private profile reuse
+
+`prepare --profiles-dir` selects a complete local machine/process/filament set instead of generic derivation. Inputs must be flattened JSON for the supported original K1/nozzle/PLA scope; inheritance and host post-processing are refused. The importer snapshots and hashes the input bytes, copies them to the fresh job, records supplied settings and keeps physical calibration explicitly unverified. Priority flags cannot override those values silently. Final generated G-code still passes the same validation before preview; transmission and receipts are unchanged.
+
 ## Camera observations
 
 Camera capture is independent of the print job/approval state. It checks the configured printer identity and reads its state, then gets one snapshot from a configured URL or Moonraker's enabled webcam list. Relative webcam paths default to the printer host at HTTP port 80, following Moonraker's documented semantics; an explicit camera base supports other proxy ports. Only the printer's configured hostname is accepted, with no redirects. The Moonraker API key is never forwarded to another origin, including a different port.

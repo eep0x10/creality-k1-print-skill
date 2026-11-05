@@ -34,9 +34,11 @@ If the source is a URL, obtain the model through the source's normal authorized 
 
 Read [the workflow](references/workflow.md) for commands and [operating limits](references/operating-limits.md) when a model or printer falls outside the supported shape.
 
+For a first spool/material combination, an appearance-sensitive print, or feedback on a physical result, read [physical quality and calibration](references/physical-quality.md). A generic profile and a valid toolpath are not proof of physical finish. Preserve the actual spool identity and measured calibration locally; do not substitute generic derived values for a validated spool profile silently.
+
 1. Inspect the model, units, components, dimensions, base contact and overhangs. Use geometry only from an external 3MF; never execute its embedded G-code or reuse its machine start commands.
 2. Apply requested size uniformly. Preserve shape and assembly transforms. Do not silently cut, split, simplify or repair a model in a way that changes its appearance or fit.
-3. Derive settings from the installed official K1 profiles. Choose walls/infill for strength or economy and layers/speeds for speed or detail. A stock profile is a starting point, not a physically calibrated spool.
+3. Derive settings from the installed official K1 profiles or explicitly reuse a reviewed complete private profile set with `--profiles-dir`. Do not mix custom profiles with priority flags or silently replace known spool settings. Choose walls/infill for strength or economy and layers/speeds for speed or detail. A stock or imported profile is a starting point until its physical calibration is verified.
 4. Compare orientations when there is a meaningful alternative. Evaluate support contact on visible surfaces, stability, strength, material and time; auto-orient is a candidate, not an optimum guarantee.
 5. Slice locally and inspect the actual deposited G-code preview. Keep work in a new job directory. Label any display sampling; preserve full bounds and estimates in the report.
 

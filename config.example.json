@@ -1,0 +1,6 @@
+{
+  "printer_url": "http://k1.local:7125",
+  "expected_hostname": "YOUR_K1_HOSTNAME",
+  "orca_path": "/path/to/orca-slicer",
+  "orca_resources": "/path/to/OrcaSlicer/resources"
+}

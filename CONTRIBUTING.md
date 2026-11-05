@@ -1,5 +1,7 @@
 # Contributing
 
+Read [AGENTS.md](AGENTS.md) and [the AI guide](docs/AI_GUIDE.md) before changes. [PROJECT_STATE.md](docs/PROJECT_STATE.md) records verified capabilities and open work; [CONTINUITY.md](docs/CONTINUITY.md) covers a fresh PC. Keep those records aligned with actual behavior and use [RELEASING.md](docs/RELEASING.md) for an authorized publication.
+
 Use a new branch and a local Python environment. Install with `python -m pip install -e .` and run `python -m unittest discover -s tests -v` before submitting changes. Keep helpers inside the self-contained skill folder so the installed skill and CLI use the same implementation.
 
 Add regression tests for changed behavior. Printer interactions in tests must be mocked. Never start, heat, home, update or stop a real printer to validate a pull request. Synthetic geometry is preferred; do not add downloaded models unless their license explicitly permits redistribution and the provenance is recorded.

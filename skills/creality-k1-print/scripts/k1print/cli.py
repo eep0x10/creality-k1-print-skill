@@ -39,9 +39,10 @@ def build_parser():
     prepare.add_argument('--job-dir', type=Path, required=True)
     prepare.add_argument('--height-mm', type=float, help='Uniform target height; omitted preserves original scale')
     prepare.add_argument('--orient', action='store_true', help='Opt in to Orca orientation; review the resulting supports')
+    prepare.add_argument('--profiles-dir', type=Path, help='Trusted local directory with flattened machine.json, process.json and filament.json; incompatible with explicit strength/finish')
     for command in (profiles, prepare):
-        command.add_argument('--strength', choices=('economy', 'balanced', 'robust'), default='balanced')
-        command.add_argument('--finish', choices=('fast', 'balanced', 'detailed'), default='balanced')
+        command.add_argument('--strength', choices=('economy', 'balanced', 'robust'), default='balanced' if command is profiles else None)
+        command.add_argument('--finish', choices=('fast', 'balanced', 'detailed'), default='balanced' if command is profiles else None)
     send = commands.add_parser('send', help='Upload/start the exact approved preview once, or validate with GET-only dry-run')
     send.add_argument('job_json', type=Path)
     send.add_argument('--approved-sha256', help='G-code SHA256 explicitly accepted with the preview')
@@ -73,7 +74,9 @@ def main(argv=None):
                 result = prepare_profiles(config, args.output_dir, args.strength, args.finish)
             elif args.command == 'prepare':
                 from .slicing import prepare_job
-                result = prepare_job(args.model, args.job_dir, config, height_mm=args.height_mm, strength=args.strength, finish=args.finish, orientation=args.orient)
+                if args.profiles_dir is not None and (args.strength is not None or args.finish is not None):
+                    raise ValidationError('--profiles-dir cannot be combined with explicit --strength or --finish')
+                result = prepare_job(args.model, args.job_dir, config, height_mm=args.height_mm, strength=args.strength, finish=args.finish, orientation=args.orient, profiles_dir=args.profiles_dir)
             else:
                 from .transport import send_job
                 result = send_job(args.job_json, config, approved_sha256=args.approved_sha256, approval_ref=args.approval_ref, dry_run=args.dry_run)
