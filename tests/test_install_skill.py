@@ -80,8 +80,11 @@ class InstallSkillTests(unittest.TestCase):
             with patch.object(module.venv, 'EnvBuilder') as builder, patch.object(module.subprocess, 'run') as run:
                 interpreter = module.repair_runtime(target)
             self.assertEqual(before, {path: path.read_bytes() for path in before})
-            builder.return_value.create.assert_called_once_with(target / '.venv')
-            self.assertEqual(run.call_args.args[0], [str(interpreter), '-m', 'pip', 'install', '-r', str(target / 'requirements.txt')])
+            # Windows temporary paths may use an 8.3 alias for the same folder.
+            # Repair deliberately resolves the recognized installation first.
+            canonical = target.resolve()
+            builder.return_value.create.assert_called_once_with(canonical / '.venv')
+            self.assertEqual(run.call_args.args[0], [str(interpreter), '-m', 'pip', 'install', '-r', str(canonical / 'requirements.txt')])
             self.assertTrue(run.call_args.kwargs['check'])
 
     def test_unknown_installation_cannot_be_repaired(self):
